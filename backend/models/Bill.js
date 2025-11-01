@@ -59,10 +59,6 @@ const billSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  picture: {
-    type: String,
-    default: "",
-  },
   items: [billItemSchema],
   loadingCharge: {
     type: Number,

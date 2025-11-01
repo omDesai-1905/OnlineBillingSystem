@@ -18,10 +18,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  businessLogo: {
-    type: String,
-    default: "",
-  },
   createdAt: {
     type: Date,
     default: Date.now,

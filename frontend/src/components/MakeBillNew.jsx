@@ -3,7 +3,6 @@ import { getProducts, createBill, getCustomers } from "../utils/api";
 import html2canvas from "html2canvas";
 import "./MakeBill.css";
 
-// Convert number to words
 function numberToWords(num) {
   if (num === 0) return "Zero";
   const ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
@@ -48,14 +47,12 @@ function MakeBillNew({ user }) {
   const [customerSuggestions, setCustomerSuggestions] = useState([]);
   const [isBillSaved, setIsBillSaved] = useState(false);
   
-  // Popup states
   const [showCalculationTypePopup, setShowCalculationTypePopup] = useState(false);
   const [showProductPopup, setShowProductPopup] = useState(false);
   const [showSubProductPopup, setShowSubProductPopup] = useState(false);
   const [showQuantityModePopup, setShowQuantityModePopup] = useState(false);
   const [showQuantityInputPopup, setShowQuantityInputPopup] = useState(false);
   
-  // Temp data for popup workflow
   const [selectedCalculationType, setSelectedCalculationType] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -120,22 +117,18 @@ function MakeBillNew({ user }) {
     setShowCustomerSuggestions(false);
   };
 
-  // Step 1: Open calculation type popup
   const openAddProductFlow = () => {
     setShowCalculationTypePopup(true);
   };
 
-  // Step 2: Select calculation type and show products
   const selectCalculationType = (type) => {
     setSelectedCalculationType(type);
-    // Debug: Log products and their calculation types
     console.log('All products:', products.map(p => ({
       name: p.mainProduct,
       calculationType: p.calculationType,
       hasField: 'calculationType' in p
     })));
     
-    // Filter products - if calculationType is not set, treat as "weight" (default)
     const filtered = products.filter(p => {
       const productType = p.calculationType || 'weight';
       return productType === type;
@@ -148,14 +141,12 @@ function MakeBillNew({ user }) {
     setShowProductPopup(true);
   };
 
-  // Step 3: Select product and show sub-products
   const selectProduct = (product) => {
     setSelectedProduct(product);
     setShowProductPopup(false);
     setShowSubProductPopup(true);
   };
 
-  // Step 4: Select sub-products and show quantity mode
   const handleSubProductToggle = (subProduct) => {
     setSelectedSubProducts(prev => {
       const exists = prev.find(sp => sp._id === subProduct._id);
@@ -187,42 +178,37 @@ function MakeBillNew({ user }) {
     const pieces = selectedCalculationType === "piece" ? parseFloat(manualSubProductPieces) : 0;
     const totalFeet = size * pieces;
 
-    // Create a temporary sub-product object
     const newSubProduct = {
-      _id: `manual-${Date.now()}`, // Temporary ID
+      _id: `manual-${Date.now()}`,
       name: manualSubProductName,
-      price: 0, // Price will be entered later in the quantity step
+      price: 0,
       size: size,
       manualPieces: pieces,
       manualTotalFeet: totalFeet,
     };
 
-    // Add to selected sub-products
     setSelectedSubProducts(prev => [...prev, newSubProduct]);
     
-    // Pre-populate quantity data with empty price for user to fill
     if (selectedCalculationType === "piece") {
       setQuantityData(prev => ({
         ...prev,
         [newSubProduct._id]: {
           pic: pieces,
           quantity: totalFeet,
-          price: "" // Empty string allows user to type
+          price: ""
         }
       }));
     } else {
-      // For weight-based, initialize with empty values
       setQuantityData(prev => ({
         ...prev,
         [newSubProduct._id]: {
           pic: "",
           quantity: "",
-          price: "" // Empty string allows user to type
+          price: ""
         }
       }));
     }
     
-    // Clear input fields
     setManualSubProductName("");
     setManualSubProductSize("");
     setManualSubProductPieces("");
@@ -239,13 +225,11 @@ function MakeBillNew({ user }) {
     setShowQuantityModePopup(true);
   };
 
-  // Step 5: Select quantity mode
   const selectQuantityMode = (mode) => {
     setQuantityMode(mode);
     setShowQuantityModePopup(false);
     
     if (mode === "individual") {
-      // Initialize quantity data for each sub-product
       const initialData = {};
       selectedSubProducts.forEach(sp => {
         initialData[sp._id] = {
@@ -269,7 +253,6 @@ function MakeBillNew({ user }) {
     setShowQuantityInputPopup(true);
   };
 
-  // Step 6: Input quantities and add to bill
   const handleQuantityInputChange = (key, field, value) => {
     setQuantityData(prev => ({
       ...prev,
@@ -296,7 +279,6 @@ function MakeBillNew({ user }) {
 
   const addItemToBill = () => {
     if (quantityMode === "individual") {
-      // Add individual items
       const newItems = selectedSubProducts.map(sp => {
         const data = quantityData[sp._id];
         const qty = parseFloat(data.quantity) || 0;
@@ -316,7 +298,6 @@ function MakeBillNew({ user }) {
       
       setBillItems([...billItems, ...newItems]);
     } else {
-      // Add as main product
       const data = quantityData.main;
       const qty = parseFloat(data.quantity) || 0;
       const price = parseFloat(data.price) || 0;
@@ -336,7 +317,6 @@ function MakeBillNew({ user }) {
       setBillItems([...billItems, item]);
     }
     
-    // Reset and close
     resetPopupFlow();
   };
 
@@ -364,7 +344,6 @@ function MakeBillNew({ user }) {
     const transport = parseFloat(transportCharge) || 0;
     const beforeRoundOff = subtotal + loading + transport;
     
-    // Use manual round off if set, otherwise calculate automatically
     let roundOff, roundedTotal;
     if (isManualRoundOff && manualRoundOff !== null) {
       roundOff = parseFloat(manualRoundOff) || 0;

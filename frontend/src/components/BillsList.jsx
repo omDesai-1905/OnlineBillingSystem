@@ -3,7 +3,6 @@ import { getBills, deleteBill, updateBill } from "../utils/api";
 import html2canvas from "html2canvas";
 import "./BillsList.css";
 
-// Convert number to words
 function numberToWords(num) {
   if (num === 0) return "Zero";
   
@@ -87,7 +86,6 @@ function BillsList() {
 
   const handleUpdateBill = async () => {
     try {
-      // Recalculate total with updated charges
       const subtotal = editedBill.items.reduce((sum, item) => sum + item.totalPrice, 0);
       const loading = parseFloat(editedBill.loadingCharge) || 0;
       const transport = parseFloat(editedBill.transportCharge) || 0;
@@ -99,7 +97,6 @@ function BillsList() {
         customerName: editedBill.customerName,
         customerMobile: editedBill.customerMobile,
         shipToAddress: editedBill.shipToAddress,
-        picture: editedBill.picture || "",
         items: editedBill.items,
         loadingCharge: loading,
         transportCharge: transport,
@@ -125,7 +122,6 @@ function BillsList() {
     const updatedItems = [...editedBill.items];
     updatedItems[index][field] = field === 'productName' ? value : parseFloat(value) || 0;
     
-    // Recalculate total price for the item
     if (field === 'quantity' || field === 'price' || field === 'pic') {
       updatedItems[index].totalPrice = updatedItems[index].quantity * updatedItems[index].price;
     }
@@ -531,7 +527,6 @@ function BillsList() {
               </thead>
               <tbody>
                 {(editMode ? editedBill.items : selectedBill.items).map((item, index) => {
-                  // Split product name: "MainProduct|SubProduct1, SubProduct2"
                   let mainProductName = item.productName;
                   let subProductsList = [];
                   

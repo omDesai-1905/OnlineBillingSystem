@@ -4,9 +4,6 @@ import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
-// @route   POST /api/expenses
-// @desc    Create a new expense
-// @access  Private
 router.post("/", auth, async (req, res) => {
   try {
     const { expenseType, description, amount, date, notes, paymentMethod } =
@@ -30,16 +27,12 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// @route   GET /api/expenses
-// @desc    Get all expenses for a user
-// @access  Private
 router.get("/", auth, async (req, res) => {
   try {
     const { startDate, endDate, expenseType } = req.query;
 
     let query = { userId: req.user.id };
 
-    // Filter by date range
     if (startDate && endDate) {
       query.date = {
         $gte: new Date(startDate),
@@ -47,7 +40,6 @@ router.get("/", auth, async (req, res) => {
       };
     }
 
-    // Filter by expense type
     if (expenseType && expenseType !== "All") {
       query.expenseType = expenseType;
     }
@@ -60,9 +52,6 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// @route   GET /api/expenses/stats
-// @desc    Get expense statistics
-// @access  Private
 router.get("/stats", auth, async (req, res) => {
   try {
     const expenses = await Expense.find({ userId: req.user.id });
@@ -89,9 +78,6 @@ router.get("/stats", auth, async (req, res) => {
   }
 });
 
-// @route   GET /api/expenses/:id
-// @desc    Get expense by ID
-// @access  Private
 router.get("/:id", auth, async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
@@ -100,7 +86,6 @@ router.get("/:id", auth, async (req, res) => {
       return res.status(404).json({ message: "Expense not found" });
     }
 
-    // Check if expense belongs to user
     if (expense.userId.toString() !== req.user.id) {
       return res.status(401).json({ message: "Not authorized" });
     }
@@ -112,9 +97,6 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// @route   PUT /api/expenses/:id
-// @desc    Update an expense
-// @access  Private
 router.put("/:id", auth, async (req, res) => {
   try {
     const { expenseType, description, amount, date, notes, paymentMethod } =
@@ -126,7 +108,6 @@ router.put("/:id", auth, async (req, res) => {
       return res.status(404).json({ message: "Expense not found" });
     }
 
-    // Check if expense belongs to user
     if (expense.userId.toString() !== req.user.id) {
       return res.status(401).json({ message: "Not authorized" });
     }
@@ -146,9 +127,6 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-// @route   DELETE /api/expenses/:id
-// @desc    Delete an expense
-// @access  Private
 router.delete("/:id", auth, async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
@@ -157,7 +135,6 @@ router.delete("/:id", auth, async (req, res) => {
       return res.status(404).json({ message: "Expense not found" });
     }
 
-    // Check if expense belongs to user
     if (expense.userId.toString() !== req.user.id) {
       return res.status(401).json({ message: "Not authorized" });
     }

@@ -38,7 +38,6 @@ function MakeBill({ user }) {
     customerName: "",
     customerMobile: "",
     shipToAddress: "",
-    picture: "",
   });
   const [billItems, setBillItems] = useState([]);
   const [loadingCharge, setLoadingCharge] = useState(0);
@@ -433,7 +432,6 @@ function MakeBill({ user }) {
         customerName: billData.customerName,
         customerMobile: billData.customerMobile,
         shipToAddress: billData.shipToAddress,
-        picture: billData.picture,
         items: billItems,
         loadingCharge: parseFloat(loadingCharge) || 0,
         transportCharge: parseFloat(transportCharge) || 0,
@@ -455,7 +453,6 @@ function MakeBill({ user }) {
       customerName: "",
       customerMobile: "",
       shipToAddress: "",
-      picture: "",
     });
     setBillItems([]);
     setLoadingCharge(0);
@@ -739,20 +736,6 @@ function MakeBill({ user }) {
                           pointerEvents: "none"
                         }}
                       />
-                      {subProduct.picture && (
-                        <img 
-                          src={subProduct.picture} 
-                          alt={subProduct.name}
-                          style={{ 
-                            width: "30px", 
-                            height: "30px", 
-                            objectFit: "cover", 
-                            borderRadius: "4px",
-                            border: "1px solid #ddd"
-                          }}
-                          onError={(e) => e.target.style.display = 'none'}
-                        />
-                      )}
                       <label style={{ 
                         flex: 1, 
                         cursor: "pointer", 
@@ -1858,34 +1841,6 @@ function MakeBill({ user }) {
             <strong>G. TOTAL: ₹{calculateTotal().toFixed(2)}</strong>
           </div>
         </div>
-
-        {/* Quantity Picture Display */}
-        {billData.picture && (
-          <div style={{ 
-            marginTop: "20px", 
-            padding: "15px", 
-            border: "2px solid #4a90e2", 
-            borderRadius: "8px",
-            background: "#f8f9fa",
-            textAlign: "center"
-          }}>
-            <h4 style={{ marginBottom: "10px", color: "#4a90e2" }}>Total Quantity Visual</h4>
-            <img 
-              src={billData.picture} 
-              alt="Total Quantity Visual" 
-              style={{ 
-                maxWidth: "100%", 
-                maxHeight: "300px", 
-                borderRadius: "8px",
-                border: "1px solid #ddd"
-              }}
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.parentElement.innerHTML += '<p style="color: #dc3545; margin-top: 10px;">Image failed to load. Please check the URL.</p>';
-              }}
-            />
-          </div>
-        )}
 
         <div className="bill-actions no-print">
           <button onClick={handleSave} className="btn btn-success">

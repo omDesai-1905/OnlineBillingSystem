@@ -9,10 +9,6 @@ const subProductSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  picture: {
-    type: String,
-    default: "",
-  },
   size: {
     type: Number,
     default: 0,

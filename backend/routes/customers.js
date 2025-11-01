@@ -4,7 +4,6 @@ import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Get all customers for logged-in user
 router.get("/", auth, async (req, res) => {
   try {
     const customers = await Customer.find({ user: req.user.id }).sort({
@@ -17,7 +16,6 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// Search customers by name (for autocomplete)
 router.get("/search", auth, async (req, res) => {
   try {
     const { query } = req.query;
@@ -34,7 +32,6 @@ router.get("/search", auth, async (req, res) => {
   }
 });
 
-// Create a new customer
 router.post("/", auth, async (req, res) => {
   try {
     const { name, mobile, address } = req.body;
@@ -58,7 +55,6 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// Update a customer
 router.put("/:id", auth, async (req, res) => {
   try {
     const { name, mobile, address } = req.body;
@@ -88,7 +84,6 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-// Delete a customer
 router.delete("/:id", auth, async (req, res) => {
   try {
     const customer = await Customer.findOneAndDelete({

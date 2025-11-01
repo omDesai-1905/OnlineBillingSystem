@@ -9,8 +9,6 @@ function Dashboard({ user }) {
     totalBills: 0,
     totalRevenue: 0,
   });
-  const [businessLogo, setBusinessLogo] = useState(user?.businessLogo || "");
-  const [editingLogo, setEditingLogo] = useState(false);
 
   useEffect(() => {
     fetchStats();
@@ -38,64 +36,11 @@ function Dashboard({ user }) {
     }
   };
 
-  const handleLogoUpdate = async () => {
-    try {
-      await updateBusinessInfo({ businessLogo });
-      const updatedUser = { ...user, businessLogo };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      setEditingLogo(false);
-      alert("Business logo updated successfully!");
-    } catch (error) {
-      console.error("Error updating logo:", error);
-      alert("Failed to update logo");
-    }
-  };
-
   return (
     <div className="dashboard">
       <div className="dashboard-header">
         <h1>Welcome, {user?.name}! 👋</h1>
         <p>Manage your {user?.businessName} business efficiently</p>
-      </div>
-
-      <div className="business-info">
-        <h2>Business Information</h2>
-        <div className="logo-input">
-          <label>Business Logo URL (optional):</label>
-          <input
-            type="text"
-            value={businessLogo}
-            onChange={(e) => setBusinessLogo(e.target.value)}
-            placeholder="Enter logo URL or emoji (e.g., 🏪)"
-            disabled={!editingLogo}
-          />
-          {editingLogo ? (
-            <>
-              <button
-                onClick={handleLogoUpdate}
-                className="btn btn-success"
-                style={{ marginLeft: "10px" }}
-              >
-                Save
-              </button>
-              <button
-                onClick={() => setEditingLogo(false)}
-                className="btn btn-secondary"
-                style={{ marginLeft: "10px" }}
-              >
-                Cancel
-              </button>
-            </>
-          ) : (
-            <button
-              onClick={() => setEditingLogo(true)}
-              className="btn btn-primary"
-              style={{ marginLeft: "10px" }}
-            >
-              Edit Logo
-            </button>
-          )}
-        </div>
       </div>
 
       <div className="dashboard-stats">

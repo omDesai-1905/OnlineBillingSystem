@@ -14,7 +14,7 @@ function Products() {
   const [formData, setFormData] = useState({
     mainProduct: "",
     calculationType: "weight",
-    subProducts: [{ name: "", price: "", picture: "", size: "" }],
+    subProducts: [{ name: "", price: "", size: "" }],
   });
   const [error, setError] = useState("");
 
@@ -37,7 +37,7 @@ function Products() {
       ...formData,
       subProducts: [
         ...formData.subProducts,
-        { name: "", price: "", picture: "", size: "" },
+        { name: "", price: "", size: "" },
       ],
     });
   };
@@ -58,7 +58,6 @@ function Products() {
     setError("");
 
     try {
-      // Validate and format sub-products (only name is required, price is optional)
       const validSubProducts = formData.subProducts.filter(
         (sp) => sp.name.trim() !== ""
       );
@@ -69,7 +68,6 @@ function Products() {
         subProducts: validSubProducts.map((sp) => ({
           name: sp.name,
           price: sp.price ? parseFloat(sp.price) : 0,
-          picture: sp.picture || "",
           size: sp.size ? parseFloat(sp.size) : 0,
         })),
       };
@@ -99,10 +97,9 @@ function Products() {
           ? product.subProducts.map((sp) => ({
               name: sp.name,
               price: sp.price,
-              picture: sp.picture || "",
               size: sp.size || "",
             }))
-          : [{ name: "", price: "", picture: "", size: "" }],
+          : [{ name: "", price: "", size: "" }],
     });
     setShowForm(true);
   };
@@ -123,7 +120,7 @@ function Products() {
     setFormData({
       mainProduct: "",
       calculationType: "weight",
-      subProducts: [{ name: "", price: "", picture: "", size: "" }],
+      subProducts: [{ name: "", price: "", size: "" }],
     });
     setEditingProduct(null);
     setShowForm(false);
@@ -226,14 +223,6 @@ function Products() {
                     step="any"
                     min="0"
                   />
-                  <input
-                    type="text"
-                    value={subProduct.picture || ""}
-                    onChange={(e) =>
-                      handleSubProductChange(index, "picture", e.target.value)
-                    }
-                    placeholder="Picture URL (optional)"
-                  />
                   {formData.subProducts.length > 1 && (
                     <button
                       type="button"
@@ -329,30 +318,9 @@ function Products() {
                   <ul>
                     {product.subProducts.map((subProduct) => (
                       <li key={subProduct._id}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
-                          }}
-                        >
-                          {subProduct.picture && (
-                            <img
-                              src={subProduct.picture}
-                              alt={subProduct.name}
-                              style={{
-                                width: "40px",
-                                height: "40px",
-                                objectFit: "cover",
-                                borderRadius: "4px",
-                              }}
-                              onError={(e) => (e.target.style.display = "none")}
-                            />
-                          )}
-                          <span>
-                            {subProduct.name} - ₹{subProduct.price.toFixed(2)}
-                          </span>
-                        </div>
+                        <span>
+                          {subProduct.name} - ₹{subProduct.price.toFixed(2)}
+                        </span>
                       </li>
                     ))}
                   </ul>
