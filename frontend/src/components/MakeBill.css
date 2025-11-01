@@ -1,0 +1,463 @@
+.make-bill-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.bill-preview {
+  background: white;
+  padding: 40px;
+  border: 2px solid #000;
+  margin-bottom: 20px;
+}
+
+/* Cash Memo Header */
+.cash-memo-header {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #000;
+  padding-bottom: 15px;
+}
+
+.business-info-section {
+  margin-bottom: 15px;
+}
+
+.business-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.business-address,
+.business-contact {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.memo-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 15px 0 0 0;
+  color: #000;
+  text-decoration: underline;
+}
+
+/* Customer Input Section (No Print) */
+.customer-input-section {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.input-group input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Customer Autocomplete */
+.customer-autocomplete {
+  position: relative;
+}
+
+.customer-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #4CAF50;
+  border-top: 1px solid #ddd;
+  border-radius: 0 0 4px 4px;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  margin-top: 2px;
+}
+
+.suggestion-item {
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f9f0;
+  padding-left: 16px;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item.no-results {
+  cursor: default;
+  color: #999;
+  text-align: center;
+  font-style: italic;
+}
+
+.suggestion-item.no-results:hover {
+  background-color: white;
+  padding-left: 12px;
+}
+
+.suggestion-name {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+
+.suggestion-mobile {
+  font-size: 12px;
+  color: #666;
+}
+
+.customer-autocomplete input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* Add Item Section (No Print) */
+.add-item-section {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.add-item-section h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.item-input-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.item-input-row input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.product-name-input {
+  position: relative;
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+.suggestion-item strong {
+  color: #333;
+  flex: 1;
+}
+
+.suggestion-item span {
+  color: #4caf50;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.suggestion-item small {
+  color: #666;
+  font-style: italic;
+}
+
+/* Cash Memo Table */
+.cash-memo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.cash-memo-table th,
+.cash-memo-table td {
+  border: 1px solid #000;
+  padding: 12px;
+  text-align: left;
+}
+
+.cash-memo-table th {
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.cash-memo-table td {
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.cash-memo-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Product Name Styling */
+.product-main-name {
+  font-weight: bold;
+  color: #000;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.product-sub-name {
+  color: #666;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* Additional Charges Section */
+.additional-charges {
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.charges-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed #ccc;
+}
+
+.charges-row:last-child {
+  border-bottom: none;
+}
+
+.charge-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.charge-value {
+  font-weight: 600;
+  color: #4a90e2;
+}
+
+.charges-input-section {
+  background: #e8f4f8;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 2px solid #4a90e2;
+}
+
+.charges-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+/* Cash Memo Footer */
+.cash-memo-footer {
+  border-top: 2px solid #000;
+  padding-top: 15px;
+  margin-top: 20px;
+}
+
+.amount-in-words {
+  margin-bottom: 15px;
+  font-size: 14px;
+  padding: 10px;
+  background: #f5f5f5;
+  border: 1px solid #000;
+}
+
+.grand-total {
+  text-align: right;
+  font-size: 18px;
+  padding: 10px;
+  background: #f5f5f5;
+  border: 1px solid #000;
+}
+
+/* Bill Actions */
+.bill-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.btn-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #45a049;
+}
+
+.btn-primary {
+  background-color: #2196f3;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0b7dda;
+}
+
+.btn-info {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.btn-info:hover {
+  background-color: #00acc1;
+}
+
+.btn-secondary {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #757575;
+}
+
+.btn-warning {
+  background-color: #ff9800;
+  color: white;
+}
+
+.btn-warning:hover {
+  background-color: #f57c00;
+}
+
+.btn-danger {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #da190b;
+}
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border-left: 4px solid #c62828;
+}
+
+.success-message {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border-left: 4px solid #2e7d32;
+}
+
+/* Print Styles */
+@media print {
+  .no-print,
+  h1,
+  button {
+    display: none !important;
+  }
+
+  /* Hide customer input section during print */
+  .make-bill-container > div:first-of-type {
+    display: none !important;
+  }
+
+  .bill-preview {
+    border: 2px solid #000;
+    padding: 20px;
+  }
+
+  .invoice-container {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .make-bill-container {
+    padding: 0;
+  }
+}
