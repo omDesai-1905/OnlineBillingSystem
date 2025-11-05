@@ -144,7 +144,21 @@ function MakeBillNew({ user }) {
   const selectProduct = (product) => {
     setSelectedProduct(product);
     setShowProductPopup(false);
-    setShowSubProductPopup(true);
+    
+    if (!product.subProducts || product.subProducts.length === 0) {
+      setSelectedSubProducts([]);
+      setQuantityMode("main");
+      setQuantityData({
+        main: {
+          pic: "",
+          quantity: "",
+          price: "",
+        }
+      });
+      setShowQuantityInputPopup(true);
+    } else {
+      setShowSubProductPopup(true);
+    }
   };
 
   const handleSubProductToggle = (subProduct) => {
@@ -218,7 +232,7 @@ function MakeBillNew({ user }) {
 
   const confirmSubProducts = () => {
     if (selectedSubProducts.length === 0) {
-      alert("Please select at least one sub-product");
+      alert("Please select at least one sub-product or add manually");
       return;
     }
     setShowSubProductPopup(false);
@@ -303,9 +317,14 @@ function MakeBillNew({ user }) {
       const price = parseFloat(data.price) || 0;
       const pic = parseFloat(data.pic) || 0;
       
-      const subProductNames = selectedSubProducts.map(sp => sp.name).join(", ");
+      const subProductNames = selectedSubProducts.length > 0 
+        ? selectedSubProducts.map(sp => sp.name).join(", ")
+        : "";
+      
       const item = {
-        productName: `${selectedProduct.mainProduct} | ${subProductNames}`,
+        productName: subProductNames 
+          ? `${selectedProduct.mainProduct} | ${subProductNames}`
+          : selectedProduct.mainProduct,
         quantity: qty,
         pic: pic,
         price: price,

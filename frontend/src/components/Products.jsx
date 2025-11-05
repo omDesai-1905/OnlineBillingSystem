@@ -184,7 +184,7 @@ function Products() {
             </div>
 
             <div className="sub-products-section">
-              <h3>Sub Products</h3>
+              <h3>Sub Products (Optional)</h3>
               {formData.subProducts.map((subProduct, index) => (
                 <div key={index} className="sub-product-row">
                   <input
@@ -195,33 +195,36 @@ function Products() {
                     }
                     placeholder={
                       formData.calculationType === "piece"
-                        ? "e.g., 8 feet"
-                        : "e.g., Masala Waffers"
+                        ? "e.g., 8 feet (optional)"
+                        : "e.g., Masala Waffers (optional)"
                     }
-                    required
                   />
                   {formData.calculationType === "piece" && (
                     <input
-                      type="number"
+                      type="text"
+                      inputMode="decimal"
                       value={subProduct.size}
-                      onChange={(e) =>
-                        handleSubProductChange(index, "size", e.target.value)
-                      }
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (value === '' || /^\d*\.?\d*$/.test(value)) {
+                          handleSubProductChange(index, "size", value);
+                        }
+                      }}
                       placeholder="Size (e.g., 8, 10, 12)"
-                      step="any"
-                      min="0"
                       style={{ width: "150px" }}
                     />
                   )}
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     value={subProduct.price}
-                    onChange={(e) =>
-                      handleSubProductChange(index, "price", e.target.value)
-                    }
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === '' || /^\d*\.?\d*$/.test(value)) {
+                        handleSubProductChange(index, "price", value);
+                      }
+                    }}
                     placeholder="Price (Optional)"
-                    step="any"
-                    min="0"
                   />
                   {formData.subProducts.length > 1 && (
                     <button
